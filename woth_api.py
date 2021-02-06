@@ -5,13 +5,13 @@ class WothAPI():
     woth_url = "https://wordofthehour.org/cache/wordofthehour.json?src=python_woth_api"
     # Get raw data from endpoint
     @staticmethod
-    def fetch_raw():
+    def __fetch_raw():
         return requests.get(WothAPI.woth_url).json()
     # Get data from endpoint and put it into a simpler format
     @staticmethod
-    def fetch_all_fields():
+    def __fetch_all_fields():
         # Get raw data from endpoint
-        raw_data = WothAPI.fetch_raw()
+        raw_data = WothAPI.__fetch_raw()
         # Distinguish between old and new translations
         old_trans = {}
         new_trans = {}
@@ -31,11 +31,10 @@ class WothAPI():
     @staticmethod
     def fetch():
         # Get all data fields
-        all_fields = WothAPI.fetch_all_fields()
+        all_fields = WothAPI.__fetch_all_fields()
         # Initialize new data dictionary
         new_data = {}
         new_data["definitions"] = {}
-        new_data["sentences"] = {}
         new_data["translations"] = {}
         # Fill in new data
         for field in all_fields:
@@ -44,7 +43,9 @@ class WothAPI():
             elif len(field) > 12 and field[-12:] == "_definitions":
                 new_data["definitions"][field[:-12]] = all_fields[field]
             elif len(field) > 9 and field[-9:] == "_sentence":
-                new_data["sentences"][field[:-9]] = all_fields[field]
+                # Sentences are not currently supported
+                # We may add support for example sentences in the future
+                continue
             else:
                 if field == "english":
                     new_data["word"] = all_fields[field]

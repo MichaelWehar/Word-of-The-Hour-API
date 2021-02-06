@@ -25,9 +25,3 @@ for field in sorted(definitions):
     definitions_list = definitions[field]
     for i in range(0, len(definitions_list)):
         print(field + " " + str(i) + ": " + definitions_list[i])
-
-# Print all sentences
-print("----- TEST 5 -----")
-sentences = woth_data["sentences"]
-for field in sorted(sentences):
-    print(field + ": " + sentences[field])
